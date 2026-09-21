@@ -91,7 +91,7 @@ def search_df():
     #A. so just make tkinter buttons and then have it use add_entry() DONE
 
 #3.a way to write that information onto a sticky on command.
-#{I think my make_password_file fill this need DONE
+#I think my make_password_file fill this need DONE
 
 #4.a way to put in a client name and shoot out add_entry()
     #A. also put in the options so that you can put in all and it gives you everything
