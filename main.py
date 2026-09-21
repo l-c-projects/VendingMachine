@@ -21,7 +21,7 @@ def add_entry(client,computer,user,password,date_added):
 
 def add_entry_button():
     date_added = date.now()
-    add_entry(client_entry.get(),computer_entry.get(),user_entry.get(),password_entry.get(),date_added)
+    add_entry(add_client_entry.get(),add_computer_entry.get(),add_user_entry.get(),add_password_entry.get(),add_date_added)
 
 #THIS IS TO MAKE THE ACTUAL PASSWORD FILE
 def make_password_file(client_for_file):
@@ -68,7 +68,20 @@ def on_close():
     window.destroy()
 
 def search_df():
-    pass
+    new_df = df[df["Client"].str.contains(lookup_client_entry.get(), case=False, na=False)
+            & df["Computer"].str.contains(lookup_computer_entry.get())]
+
+    lookup_results_box.delete("1.0", tk.END)
+    lookup_results_box.insert(tk.END, new_df.to_string(index=False))
+#if lookup_client_entry.get() == "":
+
+
+    #lookup_computer_entry
+    #lookup_password_entry_disp
+    #lookup_user_entry"""
+    
+
+    
 #this is where i am gooing to make a custom pandas search using the inputs of 
 #all of the lookup_entry 
 
@@ -82,9 +95,9 @@ def search_df():
 
 #okay so let's get organized we are going to need
 #1. a way to encrypt the client password column
-    #A. so my current theory is that whenever the application opens,
-    #then you input a password and it hashes the password then
-    #compares it to the already stored password hash.
+    #A. so my current theory is that w
+    #compares it to the already stored password hashenever the application opens,
+    #then you input a password and it hashes the password thenh.
     
 #2. a way to add that information, likely a few drop downs and text DONE
 #fillouts on a dedicated tab DONE
@@ -108,7 +121,7 @@ def search_df():
 window = tk.Tk()
 
 window.title("Login")
-window.geometry('330x440')
+window.geometry('800x800')
 window.configure(bg='white')
 window.protocol("WM_DELETE_WINDOW", on_close)
 
@@ -156,33 +169,48 @@ login_button.grid(row=2, column =0, columnspan=2)
 #region DISPENSER FRAME
 #dispenser widgets
 
-# Labels (Row 1)
-client_label = tk.Label(dispener_frame, text="Client")
-computer_label = tk.Label(dispener_frame, text="Computer")
-user_label = tk.Label(dispener_frame, text="User")
-password_label_disp = tk.Label(dispener_frame, text="Password")
+# Labels (Row 2)
+add_client_label = tk.Label(dispener_frame, text="Client")
+add_computer_label = tk.Label(dispener_frame, text="Computer")
+add_user_label = tk.Label(dispener_frame, text="User")
+add_password_label_disp = tk.Label(dispener_frame, text="Password")
 
-# Inputs (Row 2)
-client_entry = ttk.Combobox(
+# Inputs (Row 3)
+add_client_entry = ttk.Combobox(
     dispener_frame,
     values=df["Client"].unique().tolist()
 )
 
-computer_entry = tk.Entry(dispener_frame)
-user_entry = tk.Entry(dispener_frame)
-password_entry_disp = tk.Entry(dispener_frame)
+add_computer_entry = tk.Entry(dispener_frame)
+add_user_entry = tk.Entry(dispener_frame)
+add_password_entry_disp = tk.Entry(dispener_frame)
 
 # Place Labels
-client_label.grid(row=2, column=0, padx=5, pady=5)
-computer_label.grid(row=2, column=1, padx=5, pady=5)
-user_label.grid(row=2, column=2, padx=5, pady=5)
-password_label_disp.grid(row=2, column=3, padx=5, pady=5)
+add_client_label.grid(row=2, column=1, padx=5, pady=5)
+add_computer_label.grid(row=2, column=2, padx=5, pady=5)
+add_user_label.grid(row=2, column=3, padx=5, pady=5)
+add_password_label_disp.grid(row=2, column=4, padx=5, pady=5)
 
 # Place Inputs
-client_entry.grid(row=3, column=0, padx=5, pady=5)
-computer_entry.grid(row=3, column=1, padx=5, pady=5)
-user_entry.grid(row=3, column=2, padx=5, pady=5)
-password_entry_disp.grid(row=3, column=3, padx=5, pady=5)
+add_client_entry.grid(row=3, column=1, padx=5, pady=5)
+add_computer_entry.grid(row=3, column=2, padx=5, pady=5)
+add_user_entry.grid(row=3, column=3, padx=5, pady=5)
+add_password_entry_disp.grid(row=3, column=4, padx=5, pady=5)
+
+
+create_entry_button = tk.Button(dispener_frame, text= "Submit", bg="red", fg="white",
+                         font=("Aria", 14), command=add_entry_button)
+
+create_entry_button.grid(row=2, column=5, padx=5, pady=5, rowspan=2)
+
+add_entry_label = tk.Label(dispener_frame, text="Add an Entry", font=("Aria", 14))
+add_entry_label.grid(row=2, column=0, padx=5, pady=5, rowspan=2)
+
+
+
+
+
+
 
 
 #endregion
@@ -209,16 +237,16 @@ lookup_user_entry = tk.Entry(dispener_frame)
 lookup_password_entry_disp = tk.Entry(dispener_frame)
 
 # Place Labels
-lookup_client_label.grid(row=5, column=0, padx=5, pady=5)
-lookup_computer_label.grid(row=5, column=1, padx=5, pady=5)
-lookup_user_label.grid(row=5, column=2, padx=5, pady=5)
-lookup_password_label_disp.grid(row=5, column=3, padx=5, pady=5)
+lookup_client_label.grid(row=5, column=1, padx=5, pady=5)
+lookup_computer_label.grid(row=5, column=2, padx=5, pady=5)
+lookup_user_label.grid(row=5, column=3, padx=5, pady=5)
+lookup_password_label_disp.grid(row=5, column=4, padx=5, pady=5)
 
 # Place Inputs
-lookup_client_entry.grid(row=6, column=0, padx=5, pady=5)
-lookup_computer_entry.grid(row=6, column=1, padx=5, pady=5)
-lookup_user_entry.grid(row=6, column=2, padx=5, pady=5)
-lookup_password_entry_disp.grid(row=6, column=3, padx=5, pady=5)
+lookup_client_entry.grid(row=6, column=1, padx=5, pady=5)
+lookup_computer_entry.grid(row=6, column=2, padx=5, pady=5)
+lookup_user_entry.grid(row=6, column=3, padx=5, pady=5)
+lookup_password_entry_disp.grid(row=6, column=4, padx=5, pady=5)
 
 lookup_results_box = tk.Text(dispener_frame, height=15,width=80, bg="gray", fg="lightgray")
 lookup_results_box.grid(row=4,column=0,columnspan=5,)
@@ -226,6 +254,20 @@ lookup_results_box.grid(row=4,column=0,columnspan=5,)
 results_lookup_scrollbar = tk.Scrollbar(dispener_frame, command=lookup_results_box.yview)
 
 lookup_results_box.config(yscrollcommand=results_lookup_scrollbar.set)
+
+lookup_button = tk.Button(dispener_frame, text= "Submit", bg="red", fg="white",
+                         font=("Aria", 14), command=search_df)
+
+create_entry_button.grid(row=6, column=5, padx=5, pady=5, rowspan=2)
+
+search_entries_label = tk.Label(dispener_frame, text="Search Entries", font=("Aria", 14))
+search_entries_label.grid(row=6, column=0, padx=5, pady=5, rowspan=2)
+
+#This is the button that will start the note making process
+create_note_button = tk.Button(dispener_frame, text= "Create Note", bg="red", fg="white",
+                         font=("Aria", 14), command=make_password_file)
+
+create_note_button.grid(row=8, column=2, padx=10, pady=5, rowspan=3)
 
 
 #endregion
